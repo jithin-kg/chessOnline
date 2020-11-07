@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f12852ac5f7b52458332e3cd1dc1baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  olakka: {fileID: 7747516967718495074, guid: 1cdf4965b8a29764d8ac30bb8595a277, type: 3}
-  generated: {fileID: 0}
+  ChessPiece: {fileID: 7747516967718495074, guid: 1cdf4965b8a29764d8ac30bb8595a277,
+    type: 3}
   blackPieces:
   - {fileID: 0}
   - {fileID: 0}

@@ -71,7 +71,7 @@ public class Game : MonoBehaviour
         cm.activate();
         return ob;
     }
-    private void setPosition(GameObject obj)
+    public void setPosition(GameObject obj)
     {
         ChessMan cm = obj.GetComponent<ChessMan>();
         positions[cm.getXBoard(), cm.getYBoard()] = obj;
@@ -82,11 +82,11 @@ public class Game : MonoBehaviour
         positions[x, y] = null;
 
     }
-    public GameObject getObjectAtPosition(int x, int y)
+    public GameObject GetPieceAtPosition(int x, int y)
     {
         return positions[x, y];
     }
-    public bool positionOnBoard(int x, int y)
+    public bool IsValidPositionOnBoard(int x, int y)
     {
         if(x < 0 || y < 0 || x >= positions.GetLength(0) || y >= positions.GetLength(1))
         {
