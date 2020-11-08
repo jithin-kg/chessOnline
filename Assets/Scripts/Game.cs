@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Game : MonoBehaviour
 {
@@ -93,5 +95,42 @@ public class Game : MonoBehaviour
             return false;
         }
         return true;
+    }
+    public string GetCurrentPlayer()
+    {
+        return CurrentPlayer;
+    }
+    public bool IsGameOver()
+    {
+        return gameOver;
+    }
+
+    public void SwitchPlayer()
+    {
+        if(CurrentPlayer == "white")
+        {
+            CurrentPlayer = "black";
+        }
+        else
+        {
+            CurrentPlayer = "white";
+        }
+    }
+    private void Update()
+    {
+        if(gameOver && Input.GetMouseButtonDown(0))
+        {
+            gameOver = false;
+            SceneManager.LoadScene("Game");
+        }
+    }
+
+    public void winner(string winnerPlayer)
+    {
+        gameOver = true;
+        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().enabled = true;
+        GameObject.FindGameObjectWithTag("WinnerText").GetComponent<Text>().text = winnerPlayer + "has won the match!";
+
+        GameObject.FindGameObjectWithTag("RestartText").GetComponent<Text>().enabled = true;
     }
 }

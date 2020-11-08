@@ -17,6 +17,7 @@ public class MovePlate : MonoBehaviour
     {
         if (isAttacking)
         {
+
             gameObject.GetComponent<SpriteRenderer>().color = new Color(1.0f, 0.0f, 0.0f, 1.0f);
         }
     }
@@ -26,6 +27,8 @@ public class MovePlate : MonoBehaviour
         if (isAttacking)
         {
             GameObject chessPiecce = controller.GetComponent<Game>().GetPieceAtPosition(xBoardPosition, yBoardPosition);
+            if (chessPiecce.name == "white_king") controller.GetComponent<Game>().winner("black"); 
+            if (chessPiecce.name == "black_king") controller.GetComponent<Game>().winner("white");
             Destroy(chessPiecce);
         }
         //we have to empty the current position before moving the chess piece to new location.
@@ -38,6 +41,7 @@ public class MovePlate : MonoBehaviour
         reference.GetComponent<ChessMan>().setCoords();
 
         controller.GetComponent<Game>().setPosition(reference);
+        controller.GetComponent<Game>().SwitchPlayer();
         reference.GetComponent<ChessMan>().DestroyMovePlates();
     }
     public void Setcoords(int x, int y)
