@@ -53,6 +53,7 @@ public class ChessMan : MonoBehaviour
         }
     }
 
+
     public void setCoords()
     {
         float x = xOnBoard;
@@ -63,10 +64,11 @@ public class ChessMan : MonoBehaviour
 
         x += -2.3f;
         y += -2.3f;
-
+        //move the chess piece to the new location in view
         this.transform.position = new Vector3(x, y, -1.0f);
 
     }
+
 
 
 
@@ -150,11 +152,6 @@ public class ChessMan : MonoBehaviour
             case "white_pawn":
                 PawnMovePlate(xOnBoard, yOnBoard +  1);
                 break;
-
-
-
-
-
         }
     }
     public void MakeMovePlatesLine(int xInccrement, int yIncrement)
@@ -209,6 +206,9 @@ public class ChessMan : MonoBehaviour
 
     }
 
+    /**
+     * This function check whether 
+     */
     public bool IsKingUnderAttack()
     {
         bool b1 = MakeMovePlatesLineForKing(1, 1);
@@ -288,10 +288,37 @@ public class ChessMan : MonoBehaviour
         Game sc = controller.GetComponent<Game>();
         if(sc.IsValidPositionOnBoard(x, y))
         {
-            if(sc.GetPieceAtPosition(x, y) == null && CheckRules.obj.IsValidMove(x, y))
+            CheckRules.obj.SetGameObject(controller);
+            CheckRules.obj.SetReference(gameObject);
+            if (sc.GetPieceAtPosition(x, y) == null && CheckRules.obj.IsValidMove(x, y))
             {
-                MovePlateSpawn(x, y);
-            } 
+                //if(CheckRules.obj.IsKingInAttack())
+                //{   //before moving a pawn we only need to check is moving that result in a check if the king is not in check
+                //    //if(CheckRules.obj.IsMoveAllowed(x, y, xOnBoard, yOnBoard))
+                //    //{
+                //    Debug.Log("In attaaaaaaaaaaaaaack");
+                //    MovePlateSpawn(x, y);
+                //}
+                //else
+                //{
+                    
+                    //Debug.Log("not in ataaaaaaaaaaaaaaaack");
+                    if (CheckRules.obj.IsMoveAllowed(x, y, xOnBoard, yOnBoard))
+                    {
+                        Debug.Log("Move alloweeeeeeeeeeeeeeeed");
+                        //I have moved the pawn forward of screen, so I have to move it backwards
+                        CheckRules.obj.ResetOffScreenMovedPiece();
+                        MovePlateSpawn(x, y);
+                }
+                    else
+                    {
+                        CheckRules.obj.ResetOffScreenMovedPiece();
+                        Debug.Log("Move not allowedddddddddddddddddddds");
+                    }
+                //}
+            //}
+
+        } 
             if(sc.IsValidPositionOnBoard(x+1, y) &&  sc.GetPieceAtPosition(x + 1, y) != null &&
                sc.GetPieceAtPosition(x + 1, y).GetComponent<ChessMan>().player!= player ) {
                 MovePlateAttackSpawn(x + 1 , y);

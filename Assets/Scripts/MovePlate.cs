@@ -42,9 +42,9 @@ public class MovePlate : MonoBehaviour
         //move the piece to the new location
         reference.GetComponent<ChessMan>().setXOnBoard(xBoardPosition);
         reference.GetComponent<ChessMan>().setYOnBoard(yBoardPosition);
-        reference.GetComponent<ChessMan>().setCoords();
+        reference.GetComponent<ChessMan>().setCoords(); // moves the chess piece in view
 
-        controller.GetComponent<Game>().setPosition(reference);
+        controller.GetComponent<Game>().setPosition(reference); // updates in the board matrix with new piece
         controller.GetComponent<Game>().SwitchPlayer();
         reference.GetComponent<ChessMan>().DestroyMovePlates();
         //empty the check plates list
@@ -75,6 +75,10 @@ public class MovePlate : MonoBehaviour
         //}
     }
 
+    /**
+      *Function check if the previous move resulted in a check
+      *
+    */
    public void IsKingInAttack()
     {
         ChessMan c = reference.GetComponent<ChessMan>();
