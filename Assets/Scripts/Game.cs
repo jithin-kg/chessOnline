@@ -29,8 +29,8 @@ public class Game : MonoBehaviour
         whitePieces = new GameObject[]
        {
             create("white_rook", 0, 0), create("white_knight", 1, 0),
-            create("white_bishop", 2, 0), create("white_king", 3, 0),
-            create("white_queen", 4, 0), create("white_bishop", 5, 0),
+            create("white_bishop", 2, 0), create("white_queen", 3, 0),
+            create("white_king", 4, 0), create("white_bishop", 5, 0),
             create("white_knight", 6, 0), create("white_rook", 7, 0),
 
             create("white_pawn", 0, 1), create("white_pawn", 1, 1),
@@ -43,8 +43,8 @@ public class Game : MonoBehaviour
         blackPieces = new GameObject[]
         {
             create("black_rook", 0, 7), create("black_knight", 1, 7),
-            create("black_bishop", 2, 7), create("black_king", 3, 7),
-            create("black_queen", 4, 7), create("black_bishop", 5, 7),
+            create("black_bishop", 2, 7), create("black_queen", 3, 7),
+            create("black_king", 4, 7), create("black_bishop", 5, 7),
             create("black_knight", 6, 7), create("black_rook", 7, 7),
 
             create("black_pawn", 0, 6), create("black_pawn", 1, 6),

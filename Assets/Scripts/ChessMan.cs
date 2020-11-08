@@ -12,7 +12,7 @@ public class ChessMan : MonoBehaviour
     private int xOnBoard = -1;
     private int yOnBoard = -1;
 
-    private string player;
+    public string player;
 
     public Sprite black_rook, black_knight, black_bishop, black_king, black_queen, black_pawn;
     public Sprite white_rook, white_knight, white_bishop, white_king, white_queen, white_pawn;
@@ -159,11 +159,12 @@ public class ChessMan : MonoBehaviour
     }
     public void MakeMovePlatesLine(int xInccrement, int yIncrement)
     {
+       
         Game sc = controller.GetComponent<Game>();
         
         int x = xOnBoard + xInccrement;
         int y = yOnBoard + yIncrement;
-
+        
         while (sc.IsValidPositionOnBoard(x, y) && sc.GetPieceAtPosition(x, y) == null)
         {
             MovePlateSpawn(x, y);
@@ -180,6 +181,57 @@ public class ChessMan : MonoBehaviour
         }
 
     }
+    public bool MakeMovePlatesLineForKing(int xInccrement, int yIncrement)
+    {
+        Game sc = controller.GetComponent<Game>();
+        int x = xOnBoard + xInccrement;
+        int y = yOnBoard + yIncrement;
+
+        while (sc.IsValidPositionOnBoard(x, y) && sc.GetPieceAtPosition(x, y) == null)
+        {
+            // MovePlateSpawn(x, y);
+
+            x += xInccrement;
+            y += yIncrement;
+
+        }
+        if (sc.IsValidPositionOnBoard(x, y) &&
+                sc.GetPieceAtPosition(x, y).GetComponent<ChessMan>().player != player)
+        {
+            // that is an enemy piece
+
+            //MovePlateAttackSpawn(x, y);
+            King.obj.SetCheckerPosition(x);
+            King.obj.SetChekerYPosition(y);
+            return true;
+        }
+        return false;
+
+    }
+
+    public bool IsKingUnderAttack()
+    {
+        bool b1 = MakeMovePlatesLineForKing(1, 1);
+        bool b2 = MakeMovePlatesLineForKing(-1, 1);
+        bool b3 = MakeMovePlatesLineForKing(1, -1);
+        bool b4 = MakeMovePlatesLineForKing(-1, -1);
+        if(b1 || b2 || b3 || b4)
+        {
+            
+            return true;
+        }
+        return false;
+        
+
+        
+    }
+    public bool IsSamePlayer(int x, int y )
+    {
+        bool isSame = false;
+        Game sc = controller.GetComponent<Game>();
+        isSame = sc.GetPieceAtPosition(x, y).GetComponent<ChessMan>().player == player; 
+        return isSame;
+    }
 
     public void LMovePlate()
     {
@@ -194,14 +246,23 @@ public class ChessMan : MonoBehaviour
     }
     public void SurroundMovePlate()
     {
-        PointMovePlate(xOnBoard, yOnBoard + 1);
-        PointMovePlate(xOnBoard, yOnBoard - 1);
-        PointMovePlate(xOnBoard + 1 , yOnBoard );
-        PointMovePlate(xOnBoard - 1, yOnBoard );
-        PointMovePlate(xOnBoard +1 , yOnBoard + 1);
-        PointMovePlate(xOnBoard -1 , yOnBoard + 1);
-        PointMovePlate(xOnBoard -1, yOnBoard - 1);
-        PointMovePlate(xOnBoard + 1, yOnBoard - 1);
+        King.obj.SetController(controller, this);
+        King.obj.PointMovePlateKing(player, xOnBoard, yOnBoard + 1);
+        King.obj.PointMovePlateKing(player, xOnBoard, yOnBoard - 1);
+        King.obj.PointMovePlateKing(player, xOnBoard + 1, yOnBoard );
+        King.obj.PointMovePlateKing(player, xOnBoard -1 , yOnBoard );
+        King.obj.PointMovePlateKing(player, xOnBoard + 1 , yOnBoard + 1);
+        King.obj.PointMovePlateKing(player, xOnBoard -1 , yOnBoard + 1);
+        King.obj.PointMovePlateKing(player, xOnBoard -1 , yOnBoard - 1);
+        King.obj.PointMovePlateKing(player, xOnBoard + 1, yOnBoard - 1);
+        //PointMovePlate(xOnBoard, yOnBoard + 1);
+        //PointMovePlate(xOnBoard, yOnBoard - 1);
+        //PointMovePlate(xOnBoard + 1 , yOnBoard );
+        //PointMovePlate(xOnBoard - 1, yOnBoard );
+        //PointMovePlate(xOnBoard +1 , yOnBoard + 1);
+        //PointMovePlate(xOnBoard -1 , yOnBoard + 1);
+        //PointMovePlate(xOnBoard -1, yOnBoard - 1);
+        //PointMovePlate(xOnBoard + 1, yOnBoard - 1);
     }
 
     public void PointMovePlate(int xIncrement, int yIncrement)
@@ -220,12 +281,14 @@ public class ChessMan : MonoBehaviour
             }
         }
     }
+
+
     public void PawnMovePlate(int x, int y)
     {
         Game sc = controller.GetComponent<Game>();
         if(sc.IsValidPositionOnBoard(x, y))
         {
-            if(sc.GetPieceAtPosition(x, y) == null)
+            if(sc.GetPieceAtPosition(x, y) == null && CheckRules.obj.IsValidMove(x, y))
             {
                 MovePlateSpawn(x, y);
             } 
@@ -277,5 +340,12 @@ public class ChessMan : MonoBehaviour
         movePlateScript.SetReference(gameObject);
         movePlateScript.Setcoords(matrixX, matrixY);
     }
+
+    public string GetPlayer()
+    {
+        return player;
+    }
+
+  
 }
 
