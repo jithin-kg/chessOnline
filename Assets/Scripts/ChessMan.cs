@@ -198,7 +198,7 @@ public class ChessMan : MonoBehaviour
             // that is an enemy piece
 
             //MovePlateAttackSpawn(x, y);
-            King.obj.SetCheckerPosition(x);
+            King.obj.SetCheckerXPosition(x);
             King.obj.SetChekerYPosition(y);
             return true;
         }
@@ -292,17 +292,6 @@ public class ChessMan : MonoBehaviour
             CheckRules.obj.SetReference(gameObject);
             if (sc.GetPieceAtPosition(x, y) == null && CheckRules.obj.IsValidMove(x, y))
             {
-                //if(CheckRules.obj.IsKingInAttack())
-                //{   //before moving a pawn we only need to check is moving that result in a check if the king is not in check
-                //    //if(CheckRules.obj.IsMoveAllowed(x, y, xOnBoard, yOnBoard))
-                //    //{
-                //    Debug.Log("In attaaaaaaaaaaaaaack");
-                //    MovePlateSpawn(x, y);
-                //}
-                //else
-                //{
-                    
-                    //Debug.Log("not in ataaaaaaaaaaaaaaaack");
                     if (CheckRules.obj.IsMoveAllowed(x, y, xOnBoard, yOnBoard))
                     {
                         Debug.Log("Move alloweeeeeeeeeeeeeeeed");
@@ -315,8 +304,6 @@ public class ChessMan : MonoBehaviour
                         CheckRules.obj.ResetOffScreenMovedPiece();
                         Debug.Log("Move not allowedddddddddddddddddddds");
                     }
-                //}
-            //}
 
         } 
             if(sc.IsValidPositionOnBoard(x+1, y) &&  sc.GetPieceAtPosition(x + 1, y) != null &&

@@ -83,7 +83,21 @@ public class MovePlate : MonoBehaviour
     {
         ChessMan c = reference.GetComponent<ChessMan>();
         GameObject k;
-        k = GameObject.Find("black_king");
+       
+        string plyr = reference.GetComponent<ChessMan>().player;
+        //
+        //
+        //
+        //
+       Here there is a bug is have to work
+        if(plyr == "white") 
+        {
+            k = GameObject.Find("white_king");
+        }
+        else
+        {
+            k = GameObject.Find("black_king");
+        }
         int a = k.GetComponent<ChessMan>().getXBoard();
        int b =  k.GetComponent<ChessMan>().getYBoard();
        if(k.GetComponent<ChessMan>().IsKingUnderAttack())

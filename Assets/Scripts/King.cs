@@ -12,7 +12,7 @@ public class King
     
     int x, y;
 
-    public void SetCheckerPosition(int value)
+    public void SetCheckerXPosition(int value)
     {
         x = value;
     }

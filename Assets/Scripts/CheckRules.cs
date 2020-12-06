@@ -72,7 +72,16 @@ public class CheckRules
     {
         ChessMan c = reference.GetComponent<ChessMan>();
         GameObject k;
-        k = GameObject.Find("black_king");
+        string player = c.player;
+        if(player== "black")
+        {
+            k = GameObject.Find("black_king");
+        }
+        else
+        {
+            k = GameObject.Find("white_king");
+        }
+       
         int a = k.GetComponent<ChessMan>().getXBoard();
         int b = k.GetComponent<ChessMan>().getYBoard();
        
